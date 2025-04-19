@@ -109,12 +109,13 @@ void eraseMap(HashMap * map,  char * key) {
     long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL || map->buckets[p]->key == NULL) return;
     else {
-        for(long j = 1; j < map->capacity; j++){
+        for(long j = 0; j < map->capacity; j++){
             long i = (p + j) % map->capacity;
             if (map->buckets[p] == NULL || map->buckets[p]->key == NULL) return;
             if (map->buckets[i] != NULL && is_equal(map->buckets[i]->key, key)){
                 map->buckets[i]->key = NULL;
                 map->size -= 1;
+                map->current = i;
                 return;
             }
         }
