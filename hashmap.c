@@ -40,8 +40,6 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
-    if ((float)map->size / map->capacity >= 0.7)
-        enlarge(map); 
     long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL || map->buckets[p]->key == NULL){
         if (map->buckets[p] != NULL && is_equal(map->buckets[p]->key, key)) return;
@@ -51,6 +49,7 @@ void insertMap(HashMap * map, char * key, void * value) {
         map->current = p;
         map->buckets[p] = nuevo;
         map->size += 1;
+        if ((float)map->size / map->capacity >= 0.7) enlarge(map); 
         return;
     }
     else{
@@ -63,9 +62,11 @@ void insertMap(HashMap * map, char * key, void * value) {
                 map->buckets[i] = nuevo;
                 map->current = i;
                 map->size += 1;
+                if ((float)map->size / map->capacity >= 0.7) enlarge(map); 
                 return;
             }
         }
+        if ((float)map->size / map->capacity >= 0.7) enlarge(map); 
         return;
     }
 }
