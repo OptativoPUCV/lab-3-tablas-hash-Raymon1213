@@ -67,12 +67,12 @@ void enlarge(HashMap * map) {
     Pair** old_array = map->buckets;
 
     map->capacity = 2 * old_capacity;
-    map->buckets = (HashMap**)calloc(map->capacity, sizeof(HashMap*));
+    map->buckets = (Pair**)calloc(map->capacity, sizeof(Pair*));
     map->size = 0;
 
     for (int i = 0; i < old_capacity; i++){
       if (old_array[i] != NULL){
-        insert(map, old_array[i]->key, old_array[i]->value);
+        insertMap(map, old_array[i]->key, old_array[i]->value);
         free(old_array[i]);
       }
     }
