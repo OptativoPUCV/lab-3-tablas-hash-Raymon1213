@@ -42,7 +42,7 @@ int is_equal(void* key1, void* key2){
 void insertMap(HashMap * map, char * key, void * value) {
     long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL || map->buckets[p]->key == NULL){
-        if (is_equal(map->buckets[p]->key, key)) return;
+        if (map->buckets[p] != NULL && is_equal(map->buckets[p]->key, key)) return;
         Pair* nuevo = malloc(sizeof(Pair));
         nuevo -> key = key;
         nuevo -> value = value;
