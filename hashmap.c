@@ -40,6 +40,8 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
+    if ((float)map->size / map->capacity >= 0.7)
+        enlarge(map); 
     long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL || map->buckets[p]->key == NULL){
         if (map->buckets[p] != NULL && is_equal(map->buckets[p]->key, key)) return;
@@ -134,11 +136,13 @@ Pair * searchMap(HashMap * map,  char * key) {
                     return NULL;
                 }
                 else if (is_equal(map->buckets[i]->key,key)){
+                    map->current=i;
                     return map->buckets[i];
                 }
             }
         }
         else{
+            map->current= p;
             return map->buckets[p];
         }
     }
