@@ -43,11 +43,11 @@ void insertMap(HashMap * map, char * key, void * value) {
     int p = hash(key, map->capacity);
     if (map->buckets[p]->key != NULL){
         for(int i = p+1; i < map->capacity; i++){
-            if(map->buckets[p]->key == NULL){
+            if(map->buckets[i]->key == NULL){
                 Pair* nuevo = malloc(sizeof(Pair));
                 nuevo -> key = key;
                 nuevo -> value = value;
-                map->buckets[p] = nuevo;
+                map->buckets[i] = nuevo;
                 map->size += 1;
             }
         }
@@ -102,9 +102,9 @@ void eraseMap(HashMap * map,  char * key) {
             map->buckets[p]->key = NULL;
             map->size -= 1;
             for(int i = p+1; i < map->capacity; i++){
-                if ( map->buckets[p] == NULL) return;
-                else if ((is_equal(map->buckets[p]->key,key))){
-                    map->buckets[p]->key = NULL;
+                if ( map->buckets[i] == NULL) return;
+                else if ((is_equal(map->buckets[i]->key,key))){
+                    map->buckets[i]->key = NULL;
                     map->size -= 1;
                 }
             }
