@@ -162,7 +162,7 @@ Pair * firstMap(HashMap * map) {
 }
 
 Pair * nextMap(HashMap * map) {
-    for(long j = map->current; j < map->capacity; j++){
+    for(long j = (map->current+1); j < map->capacity; j++){
         long i = (j) % map->capacity;
         if(map->buckets[i] != NULL && map->buckets[i]->key != NULL){
             map->current = i;
