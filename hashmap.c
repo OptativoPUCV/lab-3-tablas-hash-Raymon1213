@@ -63,8 +63,20 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 void enlarge(HashMap * map) {
     enlarge_called = 1; //no borrar (testing purposes)
+    int old_capacity = map->capacity;
+    Pair** old_array = map->buckets;
 
+    map->capacity = 2 * old_capacity;
+    map->buckets = (HashMap**)calloc(map->capacity, sizeof(HashMap*));
+    map->size = 0;
 
+    for (int i = 0; i < old_capacity; i++){
+      if (old_array[i] != NULL){
+        insert(map, old_array[i]->key, old_array[i]->value);
+        free(old_array[i]);
+      }
+    }
+    free(old_array);
 }
 
 
@@ -90,7 +102,7 @@ void eraseMap(HashMap * map,  char * key) {
             map->buckets[p]->key = NULL;
             map->size -= 1;
             for(int i = p+1; i < map->capacity; i++){
-                if ( map->buckets[p] == NULL) return NULL;
+                if ( map->buckets[p] == NULL) return;
                 else if ((is_equal(map->buckets[p]->key,key))){
                     map->buckets[p]->key = NULL;
                     map->size -= 1;
