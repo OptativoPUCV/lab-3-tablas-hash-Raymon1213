@@ -52,9 +52,9 @@ void insertMap(HashMap * map, char * key, void * value) {
         return;
     }
     else{
-        for(long i = p+1; i < map->capacity; i++){
-            if (is_equal(map->buckets[p]->key, key)) return; 
-            if(map->buckets[p] == NULL || map->buckets[p]->key == NULL){
+        for(long i = p+1; i < map->capacity; i++){ 
+            if(map->buckets[i] == NULL || map->buckets[i]->key == NULL){
+                if (is_equal(map->buckets[i]->key, key)) return;
                 Pair* nuevo = malloc(sizeof(Pair));
                 nuevo -> key = key;
                 nuevo -> value = value;
