@@ -49,6 +49,7 @@ void insertMap(HashMap * map, char * key, void * value) {
                 nuevo -> value = value;
                 map->buckets[i] = nuevo;
                 map->size += 1;
+                return;
             }
         }
     }
@@ -58,6 +59,7 @@ void insertMap(HashMap * map, char * key, void * value) {
         nuevo -> value = value;
         map->buckets[p] = nuevo;
         map->size += 1;
+        return;
     }
 }
 
