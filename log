@@ -220,3 +220,44 @@ test.c:14:6: note: destination object referenced by 'restrict'-qualified argumen
       |      ^~~
 cc1.exe: all warnings being treated as errors
 2b01c6b
+Sat, Apr 19, 2025  4:37:44 PM: 
+ hashmap.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 46 insertions(+), 11 deletions(-)
+Compilation failed
+In file included from test.c:4:
+hashmap.c: In function 'eraseMap':
+hashmap.c:93:54: error: 'return' with a value, in function returning void [-Werror=return-type]
+   93 |                 if ( map->buckets[p] == NULL) return NULL;
+      |                                                      ^~~~
+hashmap.c:85:6: note: declared here
+   85 | void eraseMap(HashMap * map,  char * key) {
+      |      ^~~~~~~~
+test.c: At top level:
+test.c:8:8: error: '_strdup' redeclared without dllimport attribute: previous dllimport ignored [-Werror=attributes]
+    8 | char * _strdup(const char * str) {
+      |        ^~~~~~~
+hashmap.c: In function 'searchMap':
+hashmap.c:122:1: error: control reaches end of non-void function [-Werror=return-type]
+  122 | }
+      | ^
+test.c: In function 'enlarge_test':
+test.c:442:9: error: 'sprintf' argument 3 overlaps destination object 'msg' [-Werror=restrict]
+  442 |         sprintf(msg,"%.100s\nbut should be: \nvalue3  (null)  (null)  (null)  value4  (null)  value2  value1  value0  (null)  (null)  (null)  value5  (null)  (null)  (null)  (null)  (null)  (null)  (null)",msg);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test.c:14:6: note: destination object referenced by 'restrict'-qualified argument 1 was declared here
+   14 | char msg[300];
+      |      ^~~
+test.c:439:18: error: 'sprintf' argument 3 overlaps destination object 'msg' [-Werror=restrict]
+  439 |             else sprintf(msg,"%.100s%s  ", msg, (char*)map->buckets[i]->value);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test.c:14:6: note: destination object referenced by 'restrict'-qualified argument 1 was declared here
+   14 | char msg[300];
+      |      ^~~
+test.c:438:39: error: 'sprintf' argument 3 overlaps destination object 'msg' [-Werror=restrict]
+  438 |             if(map->buckets[i]==NULL) sprintf(msg,"%.100s(null)  ",msg);
+      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test.c:14:6: note: destination object referenced by 'restrict'-qualified argument 1 was declared here
+   14 | char msg[300];
+      |      ^~~
+cc1.exe: all warnings being treated as errors
+5816bc1

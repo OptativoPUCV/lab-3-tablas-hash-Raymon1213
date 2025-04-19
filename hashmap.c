@@ -40,10 +40,7 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
-    int p = hash(key, *(long*)value);
-    Pair* nuevo = malloc(sizeof(Pair));
-    nuevo -> key = key;
-    nuevo -> value = value;
+    int p = hash(key, map->capacity);
     if (map->buckets[p]->key != NULL){
         for(int i = p+1; i < map->capacity; i++){
             if(map->buckets[p]->key == NULL){
@@ -86,22 +83,60 @@ HashMap * createMap(long capacity) {
 }
 
 void eraseMap(HashMap * map,  char * key) {    
-
-
+    int p = hash(key, map->capacity);
+    if (map->buckets[p] == NULL) return;
+    else {
+        if ((is_equal(map->buckets[p]->key,key)) == 0){
+            map->buckets[p]->key = NULL;
+            map->size -= 1;
+            for(int i = p+1; i < map->capacity; i++){
+                if ( map->buckets[p] == NULL) return NULL;
+                else if ((is_equal(map->buckets[p]->key,key))){
+                    map->buckets[p]->key = NULL;
+                    map->size -= 1;
+                }
+            }
+        }
+        else{
+            return;
+        }
+    }
 }
 
-Pair * searchMap(HashMap * map,  char * key) {   
-
-
-    return NULL;
+Pair * searchMap(HashMap * map,  char * key) {
+    int p = hash(key, map->capacity);
+    if ( map->buckets[p] == NULL) return NULL;
+    else{ 
+        if((is_equal(map->buckets[p]->key,key)) == 0){
+            for(int i = p+1; i < map->capacity; i++){
+                if ( map->buckets[p] == NULL) return NULL;
+                else if (is_equal(map->buckets[p]->key,key)){
+                    return map->buckets[p];
+                }
+            }
+        }
+        else{
+            return map->buckets[p];
+        }
+    }
 }
 
 Pair * firstMap(HashMap * map) {
-
+    map->current = 0;
+    for (int i = 0; i < map->capacity; i++){
+        if(map->buckets[i]->key != NULL){
+            map->current = i;
+            return map->buckets[i];
+        }
+    }
     return NULL;
 }
 
 Pair * nextMap(HashMap * map) {
-
+    for(int i = (map->current)+1; i < map->capacity; i++){
+        if(map->buckets[i]->key != NULL){
+            return map->buckets[i];
+        }
+    }
     return NULL;
 }
