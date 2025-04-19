@@ -40,9 +40,9 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
-    int p = hash(key, map->capacity);
+    long p = hash(key, map->capacity);
     if (map->buckets[p]->key != NULL){
-        for(int i = p+1; i < map->capacity; i++){
+        for(long i = p+1; i < map->capacity; i++){
             if(map->buckets[i]->key == NULL){
                 Pair* nuevo = malloc(sizeof(Pair));
                 nuevo -> key = key;
@@ -65,14 +65,14 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 void enlarge(HashMap * map) {
     enlarge_called = 1; //no borrar (testing purposes)
-    int old_capacity = map->capacity;
+    long old_capacity = map->capacity;
     Pair** old_array = map->buckets;
 
     map->capacity = 2 * old_capacity;
     map->buckets = (Pair**)calloc(map->capacity, sizeof(Pair*));
     map->size = 0;
 
-    for (int i = 0; i < old_capacity; i++){
+    for (long i = 0; i < old_capacity; i++){
       if (old_array[i] != NULL){
         insertMap(map, old_array[i]->key, old_array[i]->value);
         free(old_array[i]);
@@ -97,7 +97,7 @@ HashMap * createMap(long capacity) {
 }
 
 void eraseMap(HashMap * map,  char * key) {    
-    int p = hash(key, map->capacity);
+    long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL) return;
     else {
         if ((is_equal(map->buckets[p]->key,key)) == 0){
@@ -118,7 +118,7 @@ void eraseMap(HashMap * map,  char * key) {
 }
 
 Pair * searchMap(HashMap * map,  char * key) {
-    int p = hash(key, map->capacity);
+    long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL){
         return NULL;
     }
