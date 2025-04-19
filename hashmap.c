@@ -109,23 +109,19 @@ void eraseMap(HashMap * map,  char * key) {
     long p = hash(key, map->capacity);
     if (map->buckets[p] == NULL || map->buckets[p]->key == NULL) return;
     else {
-        if ((is_equal(map->buckets[p]->key,key)) == 1){
-            map->buckets[p]->key = NULL;
-            map->size -= 1;
-            for(long j = 1; j < map->capacity; j++){
-                long i = (p + j) % map->capacity;
-                if ( map->buckets[i] == NULL) return;
-                else if ((is_equal(map->buckets[i]->key,key))){
-                    map->buckets[i]->key = NULL;
-                    map->size -= 1;
-                }
+        for(long j = 1; j < map->capacity; j++){
+            long i = (p + j) % map->capacity;
+            if (map->buckets[p] == NULL || map->buckets[p]->key == NULL) return;
+            if ((is_equal(map->buckets[i]->key,key))){
+                map->buckets[i]->key = NULL;
+                map->size -= 1;
+                return;
             }
         }
-        else{
-            return;
-        }
     }
+    return;
 }
+
 
 Pair * searchMap(HashMap * map,  char * key) {
     long p = hash(key, map->capacity);
