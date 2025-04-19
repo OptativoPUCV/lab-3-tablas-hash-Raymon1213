@@ -54,7 +54,7 @@ void insertMap(HashMap * map, char * key, void * value) {
     }
     else{
         for(long j = p+1; j < map->capacity; j++){
-            long i = (p + i) % map->capacity;
+            long i = (p + j) % map->capacity;
             if(map->buckets[i] == NULL || map->buckets[i]->key == NULL){
                 if (map->buckets[i] != NULL && is_equal(map->buckets[i]->key, key)) return;
                 Pair* nuevo = malloc(sizeof(Pair));
