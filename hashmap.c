@@ -117,13 +117,15 @@ void eraseMap(HashMap * map,  char * key) {
 
 Pair * searchMap(HashMap * map,  char * key) {
     int p = hash(key, map->capacity);
-    if ( map->buckets[p] == NULL) return NULL;
+    if (map->buckets[p] == NULL){
+        return NULL;
+    }
     else{ 
         if((is_equal(map->buckets[p]->key,key)) == 0){
             for(int i = p+1; i < map->capacity; i++){
-                if ( map->buckets[p] == NULL) return NULL;
-                else if (is_equal(map->buckets[p]->key,key)){
-                    return map->buckets[p];
+                if ( map->buckets[i] == NULL) return NULL;
+                else if (is_equal(map->buckets[i]->key,key)){
+                    return map->buckets[i];
                 }
             }
         }
