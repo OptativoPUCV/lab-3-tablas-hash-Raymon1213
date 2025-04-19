@@ -107,9 +107,9 @@ HashMap * createMap(long capacity) {
 
 void eraseMap(HashMap * map,  char * key) {    
     long p = hash(key, map->capacity);
-    if (map->buckets[p] == NULL) return;
+    if (map->buckets[p] == NULL || map->buckets[p]->key == NULL) return;
     else {
-        if ((is_equal(map->buckets[p]->key,key)) == 0){
+        if ((is_equal(map->buckets[p]->key,key)) == 1){
             map->buckets[p]->key = NULL;
             map->size -= 1;
             for(long j = 1; j < map->capacity; j++){
